@@ -243,7 +243,7 @@ The following example illustrates the use of constant descent Vieta jumping
 in the presence of a non-trivial base case.
 -/
 
-example {a b : ℕ} (h : a*b ∣ a^2 + b^2 + 1) :
+lemma vieta_exercise {a b : ℕ} (h : a*b ∣ a^2 + b^2 + 1) :
   3*a*b = a^2 + b^2 + 1 :=
 begin
   rcases h with ⟨k, hk⟩,

@@ -24,7 +24,7 @@ from `hneg` directly), finally raising a contradiction with `k' < k'`.
 
 (Authored by Stanislas Polu inspired by Ruben Van de Velde).
 -/
-example (f g : ℝ → ℝ)
+theorem imo1972_p5 (f g : ℝ → ℝ)
   (hf1 : ∀ x, ∀ y, (f(x+y) + f(x-y)) = 2 * f(x) * g(y))
   (hf2 : ∀ y, ∥f(y)∥ ≤ 1)
   (hf3 : ∃ x, f(x) ≠ 0)
@@ -95,7 +95,7 @@ Prove that `|g(x)| ≤ 1` for all `x`.
 
 This is a more concise version of the proof proposed by Ruben Van de Velde.
 -/
-example (f g : ℝ → ℝ)
+theorem imo1972_p5_alt1 (f g : ℝ → ℝ)
   (hf1 : ∀ x, ∀ y, (f (x+y) + f(x-y)) = 2 * f(x) * g(y))
   (hf2 : bdd_above (set.range (λ x, ∥f x∥)))
   (hf3 : ∃ x, f(x) ≠ 0)

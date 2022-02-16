@@ -55,7 +55,7 @@ begin
 end
 
 /-- Main statement:  The only positive integer coprime to all terms of the sequence `a` is `1`. -/
-example {k : ℕ} (hk : 0 < k) : (∀ n : ℕ, 1 ≤ n → is_coprime (a n) k) ↔ k = 1 :=
+theorem imo2005_p4 {k : ℕ} (hk : 0 < k) : (∀ n : ℕ, 1 ≤ n → is_coprime (a n) k) ↔ k = 1 :=
 begin
   split, rotate,
   { -- The property is clearly true for `k = 1`
