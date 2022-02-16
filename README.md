@@ -20,6 +20,7 @@ Every gem must:
 
 - be in its own file
 - start with a `-- #mathlib YYYY-MM-DD <commit>` comment indicating a commit against which the file will build
+- include a description of where the problem came from (if not implied by filename)
 - only import files from mathlib
 - be `sorry`-free
 - be `example`-free
@@ -31,7 +32,6 @@ We do allow gems that consist of a formal statement without proof, in which case
 
 We also encourage gem-writers to include:
 
-- a description of where the problem came from (if not implied by filename)
 - an informal statement of the problem (if not easily accessible online)
 - links to any proofs consulted during the formalization
 - ideally: detailed comments aligning an informal proof to the formal one
