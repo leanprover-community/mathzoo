@@ -27,7 +27,7 @@ Every gem must:
 - compile within a reasonable amount of time (e.g. 1 minute in CI)
 - not produce any output
 
-We do allow gems that consist of a formal statement without proof, in which case the gem must end with an `axiom` declaration. Gems with proofs must end with a `theorem` declaration.
+We do allow gems that consist of a formal statement without proof, in which case the statement should appear as an `axiom` declaration.
 
 We also encourage gem-writers to include:
 
