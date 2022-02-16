@@ -8,6 +8,18 @@ import imports.miniF2F
 
 open_locale nat rat real big_operators topological_space
 
+-- Sum a sequence by grouping adjacent terms.
+-- TODO: move to mathlib.
+lemma sum_pairs (n : ℕ) (f : ℕ → ℚ) :
+  ∑ k in (finset.range (2 * n)), f k = ∑ k in (finset.range n), (f (2 * k) + f (2 * k + 1)) :=
+begin
+  induction n with pn hpn,
+  { simp only [finset.sum_empty, finset.range_zero, mul_zero] },
+  { have hs: (2 * pn.succ) = (2 * pn).succ.succ := rfl,
+    rw [finset.sum_range_succ, ←hpn, hs, finset.sum_range_succ, finset.sum_range_succ],
+    ring },
+end
+
 theorem aime_1984_p1
   (u : ℕ → ℚ)
   (h₀ : ∀ n, u (n + 1) = u n + 1)

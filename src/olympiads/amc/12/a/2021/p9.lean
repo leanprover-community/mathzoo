@@ -14,14 +14,3 @@ begin
   simp only [finset.prod_range_succ],
   norm_num,
 end
-
--- Sum a sequence by grouping adjacent terms.
-lemma sum_pairs (n : ℕ) (f : ℕ → ℚ) :
-  ∑ k in (finset.range (2 * n)), f k = ∑ k in (finset.range n), (f (2 * k) + f (2 * k + 1)) :=
-begin
-  induction n with pn hpn,
-  { simp only [finset.sum_empty, finset.range_zero, mul_zero] },
-  { have hs: (2 * pn.succ) = (2 * pn).succ.succ := rfl,
-    rw [finset.sum_range_succ, ←hpn, hs, finset.sum_range_succ, finset.sum_range_succ],
-    ring },
-end
