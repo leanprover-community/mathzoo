@@ -23,13 +23,13 @@ MATHLIB_COMMIT_DATE = "2022-02-16"
 
 ProblemInfo  = collections.namedtuple("ProblemInfo", ["dirs", "filename"])
 
-IMO_NAME_PAT = re.compile(r"imo_(\d{4})_p?(\d+)") # TODO: season
-AMC_NAME_PAT = re.compile(r"amc(\d{1,2})([ab])?_(\d{4})_p?(\d+)") # TODO: season
-AIME_NAME_PAT = re.compile(r"aime_?(([iI]{1,2})_)?(\d{4})_p?(\d+)")
-MATHD_NAME_PAT = re.compile(r"mathd_(\w+)_(\d+)")
-MISC_NAME_PAT = re.compile(r"(\w+?)_(\S+)")
-THM_PAT = re.compile(r"(theorem\s+(\S+)(.+?):=(((?!theorem).)+end))", re.DOTALL)
+IMO_NAME_PAT = re.compile(r"imo_(?P<year>\d{4})_p?(?P<problem>\d+)") # TODO: season
 
+AMC_NAME_PAT = re.compile(r"amc(?P<level>\d{1,2})(?P<season>[ab])?_(?P<year>\d{4})_p?(?P<problem>\d+)") # TODO: season
+AIME_NAME_PAT = re.compile(r"aime_?((?P<season>[iI]{1,2})_)?(?P<year>\d{4})_p?(?P<problem>\d+)")
+MATHD_NAME_PAT = re.compile(r"mathd_(?P<subject>\w+)_(?P<problem>\d+)")
+MISC_NAME_PAT = re.compile(r"(?P<category>\w+?)_(?P<name>\S+)")
+THM_PAT = re.compile(r"(theorem\s+(\S+)(.+?):=(((?!theorem).)+end))", re.DOTALL)
 
 HEADER = f"""-- #mathlib {MATHLIB_COMMIT_DATE} {MATHLIB_COMMIT}
 /-
@@ -46,38 +46,39 @@ def get_info(name):
     m = AMC_NAME_PAT.match(name)
     if m is not None:
         dirs = ["olympiads", "amc"]
-        if m.group(1) is not None: dirs.append(m.group(1))
-        if m.group(2) is not None: dirs.append(m.group(2))
-        assert(m.group(3) is not None)
-        dirs.append(m.group(3))
-        return ProblemInfo(dirs, "p%d.lean" % int(m.group(4)))
+        assert(m.group("level") is not None)
+        dirs.append(m.group("level"))
+        assert(m.group("year") is not None)
+        dirs.append(m.group("year"))
+        if m.group("season") is not None: dirs.append(m.group("season"))
+        return ProblemInfo(dirs, "p%d.lean" % int(m.group("problem")))
 
     m = AIME_NAME_PAT.match(name)
     if m is not None:
         dirs = ["olympiads", "aime"]
-        if m.group(1) is not None: dirs.append(m.group(1).lower())
-        assert(m.group(3) is not None)
-        dirs.append(m.group(3))
-        return ProblemInfo(dirs, "p%d.lean" % int(m.group(4)))
+        assert(m.group("year") is not None)
+        dirs.append(m.group("year"))
+        if m.group("season") is not None: dirs.append(m.group("season").lower())
+        return ProblemInfo(dirs, "p%d.lean" % int(m.group("problem")))
 
     m = MATHD_NAME_PAT.match(name)
     if m is not None:
         dirs = ["olympiads", "mathd"]
-        assert(m.group(1) is not None)
-        dirs.append(m.group(1))
-        return ProblemInfo(dirs, "p%d.lean" % int(m.group(2)))
+        assert(m.group("subject") is not None)
+        dirs.append(m.group("subject"))
+        return ProblemInfo(dirs, "p%d.lean" % int(m.group("problem")))
 
     m = IMO_NAME_PAT.match(name)
     if m is not None:
         dirs = ["olympiads", "imo"]
-        assert(m.group(1) is not None)
-        dirs.append(m.group(1))
-        return ProblemInfo(dirs, "p%d.lean" % int(m.group(2)))
+        assert(m.group("year") is not None)
+        dirs.append(m.group("year"))
+        return ProblemInfo(dirs, "p%d.lean" % int(m.group("problem")))
 
     m = MISC_NAME_PAT.match(name)
     if m is not None:
-        dirs = ["misc", "miniF2F", m.group(1)]
-        return ProblemInfo(dirs, "%s.lean" % m.group(2))
+        dirs = ["misc", "miniF2F", m.group("category")]
+        return ProblemInfo(dirs, "%s.lean" % m.group("name"))
 
     raise Exception("unexpected: {name}".format(name=name))
 
