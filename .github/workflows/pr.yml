@@ -38,12 +38,57 @@ jobs:
 
       - name: lint
         run: |
-          ./scripts/lint-style.sh
+          bash ./scripts/lint-style.sh
+
+  build:
+    if: github.repository == 'dselsam/mathzoo'
+    name: Build (changed) Lean files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{github.event.pull_request.head.ref}}
+          repository: ${{github.event.pull_request.head.repo.full_name}}
+
+      - name: install elan
+        run: |
+          set -o pipefail
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- --default-toolchain none -y
+          ~/.elan/bin/lean --version
+          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+          echo "short_lean_version=$(~/.elan/bin/lean --run scripts/lean_version.lean)" >> $GITHUB_ENV
+
+      - name: install leanproject
+        run: |
+          set -o pipefail
+          python3 -m pip install --user pipx
+          python3 -m pipx ensurepath
+          source ~/.profile
+          pipx install mathlibtools
+
+      - name: install Python
+        if: ${{ ! 1 }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: build (changed) files
+        id: build
+        run: |
+          leanpkg configure
+          leanproject get-mathlib-cache
+          git fetch --depth=1 origin main
+          echo "::set-output name=started::true"
+          bash ./scripts/build_new_files.sh
+
+      - name: clean up working directory and elan
+        if: always() && ${{ 1 }}
+        run: rm -rf * $HOME/.elan
 
   final:
     name: Post-CI job
     if: github.repository == 'dselsam/mathzoo'
-    needs: [style_lint]
+    needs: [style_lint, build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
