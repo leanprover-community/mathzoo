@@ -7,8 +7,6 @@ Authors: Daniel Selsam
 import data.nat.basic
 import data.list.basic
 import data.list.pairwise
-import tactic.linarith
-import tactic.omega
 import tactic.fin_cases
 
 open tactic
