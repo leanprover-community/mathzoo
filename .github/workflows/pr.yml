@@ -37,7 +37,7 @@ jobs:
 
   final:
     name: Post-CI job
-    if: github.repository == 'leanprover-community/mathlib'
+    if: github.repository == 'dselsam/mathzoo'
     needs: [style_lint]
     runs-on: ubuntu-latest
     steps:
