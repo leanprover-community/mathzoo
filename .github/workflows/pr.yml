@@ -1,0 +1,62 @@
+name: sanity-check PRs
+
+on:
+  # needs read/write GH token, do *not* execute arbitrary code from PR
+  pull_request_target:
+
+jobs:
+
+  # Cancels previous runs of jobs in this file
+  cancel:
+    if: github.repository == 'dselsam/mathzoo'
+    name: 'Cancel Previous Runs (CI)'
+    runs-on: ubuntu-latest
+    # timeout-minutes: 3
+    steps:
+      - uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          all_but_latest: true
+          access_token: ${{ github.token }}
+
+  style_lint:
+    if: github.repository == 'dselsam/mathzoo'
+    name: Lint style
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install Python
+        if: ${{ 'ubuntu-latest' == 'ubuntu-latest' }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: lint
+        run: |
+          ./scripts/lint-style.sh
+
+  final:
+    name: Post-CI job
+    if: github.repository == 'leanprover-community/mathlib'
+    needs: [style_lint]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - id: PR
+        uses: 8BitJonny/gh-get-current-pr@1.2.0
+        # TODO: this may not work properly if the same commit is pushed to multiple branches:
+        # https://github.com/8BitJonny/gh-get-current-pr/issues/8
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Only return if PR is still open
+          filterOutClosed: true
+
+      - id: remove_labels
+        name: Remove "awaiting-CI"
+        # we use curl rather than octokit/request-action so that the job won't fail
+        # (and send an annoying email) if the labels don't exist
+        run: |
+          curl --request DELETE \
+            --url https://api.github.com/repos/${{ github.repository }}/issues/${{ steps.PR.outputs.number }}/labels/awaiting-CI \
+            --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}'          
