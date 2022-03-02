@@ -6,7 +6,7 @@ Mathzoo is a user maintained collection of mathematical formalizations in the [L
 
 1. *Minimal requirements*. Gems will be accepted without detailed code review. There are no requirements on proof style or formatting conventions.
 
-1. *Minimal maintainance*. Gems need not be kept up-to-date with mathlib. Instead, every file must begin with a comment `-- #mathlib YYYY-MM-DD <commit>` indicating the last known commit against which the file will build.
+1. *Minimal maintainance*. Gems need not be kept up-to-date with mathlib. Files that no longer build must begin with a comment `-- #mathlib YYYY-MM-DD <commit>` indicating the last known commit against which the file builds.
 
 1. *Dataset friendliness*. We strongly encourage the inclusion of metadata that will make gems more useful as training data for both mathematical problem solving (e.g. [The IMO Grand Challenge](https://imo-grand-challenge.github.io/)) and auto-formalization.
 
@@ -19,9 +19,9 @@ Gems are organized in a directory hierarchy that reflects their provenance as mu
 Every gem must:
 
 - be in its own file
-- start with a `-- #mathlib YYYY-MM-DD <commit>` comment indicating a commit against which the file will build
+- build on the current version of mathlib (i.e. the version in `leanpkg.toml`)
 - include a description of where the problem came from (if not implied by filename)
-- only import files from mathlib
+- only import files from mathlib and mathzoo's `imports` folder
 - be `sorry`-free
 - be `example`-free
 - be reasonably short (e.g. <200 lines, not including comments)
@@ -35,3 +35,5 @@ We also encourage gem-writers to include:
 - an informal statement of the problem (if not easily accessible online)
 - links to any proofs consulted during the formalization
 - ideally: detailed comments aligning an informal proof to the formal one
+
+Note: the `-- #mathlib YYYY-MM-DD <commit>` header will be added automatically to files that break when updating mathlib, by the script [update_mathlib.py](/scripts/update_mathlib.py).
