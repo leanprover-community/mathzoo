@@ -10,7 +10,7 @@ jobs:
 
   # Cancels previous runs of jobs in this file
   cancel:
-    if: github.repository == 'dselsam/mathzoo'
+    if: github.repository == 'leanprover-community/mathzoo'
     name: 'Cancel Previous Runs (CI)'
     runs-on: ubuntu-latest
     # timeout-minutes: 3
@@ -21,7 +21,7 @@ jobs:
           access_token: ${{ github.token }}
 
   style_lint:
-    if: github.repository == 'dselsam/mathzoo'
+    if: github.repository == 'leanprover-community/mathzoo'
     name: Lint style
     runs-on: ubuntu-latest
     steps:
@@ -41,7 +41,7 @@ jobs:
           bash ./scripts/lint-style.sh
 
   build:
-    if: github.repository == 'dselsam/mathzoo'
+    if: github.repository == 'leanprover-community/mathzoo'
     name: Build (changed) Lean files
     runs-on: ubuntu-latest
     steps:
@@ -87,7 +87,7 @@ jobs:
 
   final:
     name: Post-CI job
-    if: github.repository == 'dselsam/mathzoo'
+    if: github.repository == 'leanprover-community/mathzoo'
     needs: [style_lint, build]
     runs-on: ubuntu-latest
     steps:
