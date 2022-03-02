@@ -260,8 +260,10 @@ def regular_check(lines, path):
     copy_lines = ""
     for line_nr, line in enumerate(lines, 1):
         # This header is only necessary for bit-rotted files.
-        if line_nr == 1 and MATHLIB_COMMIT_HEADER_PAT.match(line) is not None:
-            continue            
+        # So, for simplicity, we do not allow such a header for new files touched by a PR,
+        # which are required to build with the current mathlib.
+        # if line_nr == 1 and MATHLIB_COMMIT_HEADER_PAT.match(line) is not None:
+            # continue            
         if not copy_started and line == "\n":
             errors += [(ERR_COP, copy_start_line_nr, path)]
             continue
