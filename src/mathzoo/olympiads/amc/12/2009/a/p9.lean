@@ -7,9 +7,17 @@ import mathzoo.imports.miniF2F
 
 open_locale nat rat real big_operators topological_space
 
-axiom amc12a_2009_p9
+/--
+Suppose that $f(x+3)=3x^2 + 7x + 4$ and $f(x)=ax^2 + bx + c$. What is $a+b+c$?
+Answer: $2$
+--/
+theorem amc12a_2009_p9
   (a b c : ℝ)
   (f : ℝ → ℝ)
   (h₀ : ∀ x, f (x + 3) = 3 * x^2 + 7 * x + 4)
   (h₁ : ∀ x, f x = a * x^2 + b * x + c) :
-  a + b + c = 2 
+  a + b + c = 2 :=
+begin
+  simp [*, pow_succ'] at *,
+  linarith [h₀ 0, h₀ 1, h₀ 2],
+end
