@@ -21,7 +21,7 @@ theorem mathd_algebra_405
   (h₁ : x^2 + 4 * x + 4 < 20) :
   x = 1 ∨ x = 2 :=
 begin
-  cases h₀ with n,
+  cases h₀ with n hn,
   by exact or.inl rfl,
   by_contra h₂,
   apply h₂,
@@ -34,5 +34,5 @@ begin
   contrapose! H,
   right,
   simp * at *,
-  cases h₀_ᾰ,
+  cases hn,
 end
