@@ -15,9 +15,6 @@ theorem aime_1984_p15
   (h₃ : (x^2 / (8^2 - 1)) + (y^2 / (8^2 - 3^2)) + (z^2 / (8^2 - 5^2)) + (w^2 / (8^2 - 7^2)) = 1) :
   x^2 + y^2 + z^2 + w^2 = 36 :=
 begin
-  revert x y z w h₀ h₁ h₂ h₃,
-  ring_nf,
-  intros x y z w h,
-  intros h,
-  intros; linarith,
+  ring_exp at *,
+  linarith,
 end

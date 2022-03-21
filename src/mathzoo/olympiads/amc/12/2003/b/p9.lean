@@ -14,8 +14,6 @@ theorem amc12b_2003_p9
   (h₁ : f 6 - f 2 = 12) :
   f 12 - f 2 = 30 :=
 begin
-  revert h₁,
-  simp only [h₀],
-  intro,
+  simp [*] at *,
   linarith,
 end

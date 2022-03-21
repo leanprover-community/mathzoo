@@ -7,5 +7,8 @@ import mathzoo.imports.miniF2F
 
 open_locale nat rat real big_operators topological_space
 
-axiom mathd_numbertheory_252 :
-  (nat.factorial 7) % 23 = 3 
+theorem mathd_numbertheory_252 :
+  (nat.factorial 7) % 23 = 3 :=
+begin
+  norm_num,
+end

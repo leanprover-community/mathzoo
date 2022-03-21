@@ -21,18 +21,10 @@ theorem mathd_algebra_405
   (h₁ : x^2 + 4 * x + 4 < 20) :
   x = 1 ∨ x = 2 :=
 begin
-  cases h₀ with n hn,
-  by exact or.inl rfl,
-  by_contra h₂,
-  apply h₂,
-  apply or.inr,
-  apply le_antisymm,
-  nlinarith,
-  apply nat.succ_le_iff.2,
-  contrapose! h₂,
-  by_contra H,
-  contrapose! H,
+  cases lt_trichotomy x 1 with h₂ h₂,
+  { left, nlinarith },
+  cases h₂,
+  { simp * at * },
   right,
-  simp * at *,
-  cases hn,
+  nlinarith [h₁, h₂, 0],
 end

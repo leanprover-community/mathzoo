@@ -11,6 +11,5 @@ theorem mathd_numbertheory_84 :
   int.floor ((9:ℝ) / 160 * 100) = 5 :=
 begin
   rw int.floor_eq_iff,
-  split,
-  all_goals { norm_num },
+  norm_num,
 end

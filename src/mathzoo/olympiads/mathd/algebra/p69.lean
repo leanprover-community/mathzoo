@@ -7,8 +7,13 @@ import mathzoo.imports.miniF2F
 
 open_locale nat rat real big_operators topological_space
 
-axiom mathd_algebra_69
+theorem mathd_algebra_69
   (r s : ℕ+)
   (h₀ : ↑r * ↑s = (450:ℤ))
   (h₁ : (↑r + 5) * (↑s - 3) = (450:ℤ)) :
-  r = 25 
+  r = 25 :=
+begin
+  apply subtype.ext,
+  norm_num [add_mul] at *,
+  nlinarith,
+end

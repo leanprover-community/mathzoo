@@ -12,9 +12,6 @@ theorem numbertheory_2dvd4expn
   (h₀ : n ≠ 0) :
   2 ∣ 4^n :=
 begin
-  revert n h₀,
-  rintros ⟨k, rfl⟩,
-  { norm_num },
-  apply dvd_pow,
+  apply dvd_pow _ h₀,
   norm_num,
 end

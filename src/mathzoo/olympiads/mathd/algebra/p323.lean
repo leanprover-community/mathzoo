@@ -12,10 +12,6 @@ theorem mathd_algebra_323
   (h : ∀ x, σ.1 x = x^3 - 8) :
   σ.2 (σ.1 (σ.2 19)) = 3 :=
 begin
-  revert h,
   simp,
-  intro h,
-  apply σ.injective,
-  simp [h, σ.apply_symm_apply],
-  norm_num,
+  norm_num [*, equiv.symm_apply_eq] at *,
 end

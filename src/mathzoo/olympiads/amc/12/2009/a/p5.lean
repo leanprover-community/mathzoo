@@ -7,7 +7,10 @@ import mathzoo.imports.miniF2F
 
 open_locale nat rat real big_operators topological_space
 
-axiom amc12a_2009_p5
+theorem amc12a_2009_p5
   (x : ℝ)
   (h₀ : x^3 - (x + 1) * (x - 1) * x = 5) :
-  x^3 = 125 
+  x^3 = 125 :=
+begin
+  nlinarith [pow_two x],
+end
