@@ -7,8 +7,12 @@ import mathzoo.imports.miniF2F
 
 open_locale nat rat real big_operators topological_space
 
-axiom mathd_algebra_547
+theorem mathd_algebra_547
   (x y : ℝ)
   (h₀ : x = 5)
   (h₁ : y = 2) :
-  real.sqrt (x^3 - 2^y) = 11 
+  real.sqrt (x^3 - 2^y) = 11 :=
+begin
+  simp [h₀, h₁],
+  norm_num [real.sqrt_eq_cases],
+end

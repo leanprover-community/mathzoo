@@ -7,7 +7,10 @@ import mathzoo.imports.miniF2F
 
 open_locale nat rat real big_operators topological_space
 
-axiom mathd_numbertheory_335
+theorem mathd_numbertheory_335
   (n : ℕ)
   (h₀ : n % 7 = 5) :
-  (5 * n) % 7 = 4 
+  (5 * n) % 7 = 4 :=
+begin
+  norm_num [nat.mul_mod, h₀],
+end

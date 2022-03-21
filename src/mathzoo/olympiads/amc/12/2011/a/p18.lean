@@ -7,7 +7,13 @@ import mathzoo.imports.miniF2F
 
 open_locale nat rat real big_operators topological_space
 
-axiom amc12a_2011_p18
+theorem amc12a_2011_p18
   (x y : ℝ)
   (h₀ : abs (x + y) + abs (x - y) = 2) :
-  x^2 - 6 * x + y^2 ≤ 9 
+  x^2 - 6 * x + y^2 ≤ 9 :=
+begin
+  simp [abs_eq_max_neg, abs_le] at h₀,
+  norm_num [max_def, le_refl] at *,
+  split_ifs at *,
+  all_goals { nlinarith },
+end

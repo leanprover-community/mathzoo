@@ -7,9 +7,13 @@ import mathzoo.imports.miniF2F
 
 open_locale nat rat real big_operators topological_space
 
-axiom amc12a_2017_p7
+theorem amc12a_2017_p7
   (f : ℕ → ℝ)
   (h₀ : f 1 = 2)
   (h₁ : ∀ n, even n → f n = f (n - 1) + 1)
   (h₂ : ∀ n, odd n → f n = f (n - 2) + 1) :
-  f 2017 = 2018 
+  f 2017 = 2018 :=
+begin
+  have t := h₁ 0,
+  norm_num at t,
+end

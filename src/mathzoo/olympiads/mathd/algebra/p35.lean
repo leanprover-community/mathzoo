@@ -13,7 +13,5 @@ theorem mathd_algebra_35
   (h₁ : ∀ x≠0, q x = 6 / x) :
   p (q 2) = -7 :=
 begin
-  rw [h₀, h₁],
-  ring,
-  linarith,
+  norm_num [h₀, h₁],
 end

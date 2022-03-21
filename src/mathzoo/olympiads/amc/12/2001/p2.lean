@@ -15,12 +15,6 @@ theorem amc12_2001_p2
   (h₃ : n = a * b + a + b) :
   b = 9 :=
 begin
-  rw h₂ at h₃,
-  simp at h₃,
-  have h₄ : 10 * a = (b + 1) * a, linarith,
-  simp at h₄,
-  cases h₄ with h₅ h₆,
-  linarith,
-  exfalso,
-  simp [*, le_refl] at *,
+  simp [*] at *,
+  nlinarith,
 end

@@ -7,8 +7,11 @@ import mathzoo.imports.miniF2F
 
 open_locale nat rat real big_operators topological_space
 
-axiom mathd_numbertheory_412
+theorem mathd_numbertheory_412
   (x y : ℕ)
   (h₀ : x % 19 = 4)
   (h₁ : y % 19 = 7) :
-  ((x + 1)^2 * (y + 5)^3) % 19 = 13 
+  ((x + 1)^2 * (y + 5)^3) % 19 = 13 :=
+begin
+  norm_num [h₀, h₁, nat.mul_mod, nat.add_mod, pow_succ],
+end

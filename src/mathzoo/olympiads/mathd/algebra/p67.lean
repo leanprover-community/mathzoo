@@ -13,6 +13,5 @@ theorem mathd_algebra_67
   (h₁ : ∀ x, g x = x^2 - 2) :
   g (f (-1)) = 2 :=
 begin
-  rw [h₀, h₁],
-  ring,
+  norm_num [h₀, h₁],
 end

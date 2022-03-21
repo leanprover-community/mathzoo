@@ -7,7 +7,14 @@ import mathzoo.imports.miniF2F
 
 open_locale nat rat real big_operators topological_space
 
-axiom mathd_numbertheory_326
+theorem mathd_numbertheory_326
   (n : ℕ)
   (h₀ : (↑n - 1) * ↑n * (↑n + 1) = (720:ℤ)) :
-  (n + 1) = 10 
+  (n + 1) = 10 :=
+begin
+  cases n,
+  norm_num at h₀,
+  norm_num [mul_add] at h₀,
+  norm_num [nat.succ_eq_add_one] at *,
+  nlinarith,
+end
